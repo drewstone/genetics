@@ -25,9 +25,10 @@ def one_hot_encode_dataset(positives, negatives):
 				matrix[inx][3] = 1
 
 		train_X.append(matrix)
-		train_Y.append(np.array([1,0]))
+		# train_Y.append(np.array([1,0]))
+		train_Y.append([1,0])
 
-	for sequence in positives:
+	for sequence in negatives:
 		matrix = np.zeros((500, 4), dtype=int)
 		for (inx, letter) in enumerate(sequence):
 			if letter == "A":
@@ -40,7 +41,8 @@ def one_hot_encode_dataset(positives, negatives):
 				matrix[inx][3] = 1
 
 		train_X.append(matrix)
-		train_Y.append(np.array([0,1]))
+		# train_Y.append(np.array([0,1]))
+		train_Y.append([0,1])
 
 	# top = np.concatenate((np.ones(len(positives)), np.zeros(len(negatives))))
 	# bottom = np.concatenate((np.zeros(len(positives)), np.ones(len(negatives))))
