@@ -1,2 +1,4 @@
 Enhancers_vs_negative
 __pycache__
+models/*.h5
+models/*.json
