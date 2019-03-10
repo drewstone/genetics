@@ -1,7 +1,7 @@
 from keras.layers import Conv1D, Conv2D, Dense, MaxPooling1D, MaxPooling2D, Flatten, Dropout
 from keras.models import Sequential
 
-def build_model(train_features):
+def build_cnn_model(train_features):
 	model = Sequential()
 	model.add(Conv2D(filters=20, kernel_size=(9,4), input_shape=(500,4,1), activation = 'relu'))
 	model.add(MaxPooling2D(pool_size=(3,1)))
@@ -18,4 +18,10 @@ def build_model(train_features):
 	model.compile(loss='binary_crossentropy', optimizer='adam', 
 	              metrics=['binary_accuracy'])
 	model.summary()
-	return model;
+	return model
+
+def build_kmer_cnn_model(train_features):
+	pass
+
+def build_attention_model(train_features):
+	pass
