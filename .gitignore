@@ -2,3 +2,5 @@ Enhancers_vs_negative
 __pycache__
 models/*.h5
 models/*.json
+kmer-models/*.h5
+kmer-models/*.json

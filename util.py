@@ -1,5 +1,4 @@
 import numpy as np
-import khmer
 
 def parse_data_for_animal(animal):
 	positives, negatives = [], []
@@ -12,7 +11,7 @@ def parse_data_for_animal(animal):
 	return positives, negatives
 
 def one_hot_encode_sequence(sequence):
-	matrix = np.zeros((500, 4), dtype=int)
+	matrix = np.zeros((len(sequence), 4), dtype=int)
 	for (inx, letter) in enumerate(sequence):
 		if letter == "A":
 			matrix[inx][0] = 1
@@ -40,12 +39,10 @@ def one_hot_encode_dataset(positives, negatives):
 
 
 def kmer_expansion(sequence, k):
-	ksize = 21
-	target_table_size = 5e8
-	num_tables = 4
-
-	counts = khmer.Counttable(ksize, target_table_size, num_tables)
-	return counts.get_kmers()
+	table = []
+	for i in range(len(sequence) - k + 1):
+		table.append(sequence[i:k+i])
+	return table
 
 def kmer_encode_dataset(positives, negatives, k):
 	train_X, train_Y = [], []
@@ -64,3 +61,5 @@ def kmer_encode_dataset(positives, negatives, k):
 
 		train_X.append(np.array(kmer_list))
 		train_Y.append([0,1])
+
+	return np.array(train_X), np.array(train_Y)
