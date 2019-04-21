@@ -1,6 +1,8 @@
-Enhancers_vs_negative
+.DS_STORE
 __pycache__
-models/*.h5
-models/*.json
-kmer-models/*.h5
-kmer-models/*.json
+enhancer_classification/Enhancers_vs_negative
+enhancer_classification/models/*.h5
+enhancer_classification/models/*.json
+enhancer_classification/kmer-models/*.h5
+enhancer_classification/kmer-models/*.json
+nanopore_seq2seq/chiron

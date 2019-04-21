@@ -47,7 +47,7 @@ def build_kmer_cnn_model(train_features):
 	model = Sequential()
 	model.add(Conv3D(
 		filters=20,
-		kernel_size=(9, train_features.shape[2], train_features.shape[3]),
+		kernel_size=(train_features.shapep[2] * 3, train_features.shape[2], train_features.shape[3]),
 		input_shape=(
 			train_features.shape[1],
 			train_features.shape[2],
@@ -56,11 +56,11 @@ def build_kmer_cnn_model(train_features):
 		padding = 'same',
 		activation = 'relu'
 	))
-	model.add(MaxPooling3D(pool_size=(3,2,2)))
+	model.add(MaxPooling3D(pool_size=(2,train_features.shape[2] / 2, 2)))
 	model.add(Conv3D(filters=30, kernel_size=(20, 5, 5), activation="relu", padding="same"))
-	model.add(MaxPooling3D(pool_size=(4,3,2)))
+	model.add(MaxPooling3D(pool_size=(2,2,2)))
 	model.add(Conv3D(filters=40, kernel_size=(30, 4, 4), activation="relu", padding="same"))
-	model.add(MaxPooling3D(pool_size=(4,1,1)))
+	model.add(MaxPooling3D(pool_size=(3,1,1)))
 	model.add(Flatten())
 	model.add(Dense(90, activation='relu'))
 	model.add(Dense(45, activation='relu'))

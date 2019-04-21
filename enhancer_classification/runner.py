@@ -4,7 +4,7 @@ from keras.models import model_from_json
 import util
 import nn
 
-def run_kmer_for_dataset(dataset="dog", model_path="./kmer-models", ksize=6):
+def run_kmer_for_dataset(dataset="dog", model_path="./kmer-models", ksize=21):
 	positives, negatives = util.parse_data_for_animal(dataset)
 	X, Y = util.kmer_encode_dataset(positives, negatives, ksize)
 	print(X.shape, Y.shape)
