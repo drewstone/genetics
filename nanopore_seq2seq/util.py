@@ -13,8 +13,11 @@ def read_data_into_mem(raw=True, result=True, meta=False, segments=False):
 					data[name] = {}
 
 				with open('./chiron/raw/{}'.format(file)) as f:
-					data[name]['raw'] = {
-						"data": f.readlines()[0]
+					data[name] = {
+						"raw": np.array(list(map(
+                            lambda v: int(v), f.readlines()[0].split(' ')
+                        ))),
+                        **data[name]
 					}
 
 	if result:
@@ -27,10 +30,11 @@ def read_data_into_mem(raw=True, result=True, meta=False, segments=False):
 
 				with open('./chiron/result/{}'.format(file)) as f:
 					lines = f.readlines()
-					data[name]['result'] = {
+					data[name] = {
 						"name": lines[0],
-						"sequence": lines[1],
-						"quality": lines[3],
+						"sequence": one_hot_encode_sequence(lines[1]),
+						# "quality": lines[3],
+                        **data[name]
 					}
 
 	if meta:
@@ -40,3 +44,18 @@ def read_data_into_mem(raw=True, result=True, meta=False, segments=False):
 	if segments:
 		for dirname, dirnames, filenames in os.walk('./chiron/segments'):
 			pass
+
+	return data
+
+def one_hot_encode_sequence(sequence):
+	matrix = np.zeros((len(sequence), 4), dtype=int)
+	for (inx, letter) in enumerate(sequence):
+		if letter == "A":
+			matrix[inx][0] = 1
+		if letter == "G":
+			matrix[inx][1] = 1
+		if letter == "C":
+			matrix[inx][2] = 1
+		if letter == "T":
+			matrix[inx][3] = 1
+	return matrix
