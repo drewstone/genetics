@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from scipy.stats import moment
 
 def read_data_into_mem(raw=True, result=True, meta=False, segments=False):
 	data = {}
@@ -59,3 +60,20 @@ def one_hot_encode_sequence(sequence):
 		if letter == "T":
 			matrix[inx][3] = 1
 	return matrix
+
+def kmer_expansion(sequence, k):
+	table = []
+	for i in range(len(sequence) - k + 1):
+		table.append(sequence[i:k+i])
+	return table
+
+# Returns the moments of a normalized signal sequence
+def get_moment_features(signal_seq, max_moment, norm_ord=1):
+	# make a numpy array if not
+	arr = np.array(signal_seq)
+	# normalize the sequence
+	normalized_arr = arr / np.linalg.norm(arr, ord=norm_ord)
+	# calculate an array of moments up to "max_moment"
+	return np.array(list(map(
+		lambda k: moment(normalized_arr, moment=k), [ i for i in range(max_moment)]
+	)))
